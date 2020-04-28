@@ -1,0 +1,125 @@
+# This YAML file describes your package. Stack will automatically generate a
+# Cabal file when you run `stack build`. See the hpack website for help with
+# this file: <https://github.com/sol/hpack>.
+name: cloak
+version: '0.0.0'
+github: "kleidukos/cloak"
+license: MIT
+author: "Hécate"
+maintainer: "Hécate"
+# synopsis: A new Haskeleton package.
+# description: cloak is a new Haskeleton package.
+# category: Other
+
+extra-source-files:
+- CHANGELOG.md
+- LICENSE.md
+- package.yaml
+- README.md
+- stack.yaml
+
+default-extensions:
+  - ApplicativeDo
+  - BangPatterns
+  - ConstraintKinds
+  - DataKinds
+  - DefaultSignatures
+  - DeriveAnyClass
+  - DeriveFoldable
+  - DeriveFunctor
+  - DeriveGeneric
+  - DeriveLift
+  - DeriveTraversable
+  - DerivingStrategies
+  - DuplicateRecordFields 
+  - EmptyCase
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GADTs
+  - GeneralizedNewtypeDeriving
+  - InstanceSigs
+  - KindSignatures
+  - LambdaCase
+  - MultiParamTypeClasses
+  - MultiWayIf
+  - NamedFieldPuns
+  - OverloadedStrings
+  - PatternSynonyms
+  - RankNTypes
+  - RecordWildCards
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TupleSections
+  - TypeApplications
+  - TypeFamilies
+  - TypeFamilyDependencies
+  - TypeOperators
+
+when:
+  - condition: "impl(ghc >= 8.4.4)"
+    then:
+      ghc-options:
+        - -Wall
+        - -Wcompat
+        - -Widentities
+        - -Wincomplete-record-updates
+        - -Wincomplete-uni-patterns
+        - -Wmissing-export-lists
+        - -Wpartial-fields
+        - -Wredundant-constraints
+        - -fhide-source-paths
+        - -Wno-unused-do-bind
+    else:
+      ghc-options:
+        - -Wall
+        - -Wcompat
+        - -Widentities
+        - -Wincomplete-record-updates
+        - -Wincomplete-uni-patterns
+        - -Wredundant-constraints
+        - -fhide-source-paths
+        - -Wno-unused-do-bind
+
+library:
+  dependencies:
+    - base-noprelude       >= 4.13.0 && < 4.14
+    - relude               >= 0.6.0  && < 0.7
+    - text                 >= 1.2.4  && < 1.3
+    - unordered-containers >= 0.2.10 && < 0.3
+    - vector               >= 0.12.1 && < 0.13
+  source-dirs: src
+
+executables:
+  cloak:
+    source-dirs: app
+    main: Main.hs
+    dependencies:
+    - base-noprelude
+    - cloak
+    - relude
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+benchmarks:
+  cloak-benchmarks:
+    source-dirs: benchmark
+    main: Main.hs
+    dependencies:
+    - base-noprelude
+    - cloak
+    - criterion
+
+tests:
+  cloak-test:
+    source-dirs: test
+    main: Main.hs
+    dependencies:
+    - base-noprelude
+    - cloak
+    - relude
+    - tasty
+    - tasty-hspec
