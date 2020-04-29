@@ -3,10 +3,8 @@ module Types.Action
   , ActionID (..)
   ) where
 
-newtype ActionID = ActionID Text
-  deriving newtype (Show, Eq)
+newtype ActionID = ActionID Int
+  deriving newtype (Show, Eq, Hashable)
 
-data Action = Action { name     :: Text
-                     , actionID :: ActionID
-                     }
-
+newtype Action = Action Text
+  deriving newtype (Show, Eq, IsString)

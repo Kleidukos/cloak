@@ -8,5 +8,5 @@ import           Types.Object
 brassHook :: Object
 brassHook = Object { name = "Brass hook"
                    , description = "A brass hook… Looks like you can use it."
-                   , objectId = ObjectID "BrassHook"
+                   , objectId = ObjectID 1
                    }

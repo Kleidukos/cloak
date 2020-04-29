@@ -3,8 +3,10 @@ module Entities.Action
   , hookTheCloak
   ) where
 
+import           Types.Action
+
 goToTheBar :: Action
-goToTheBar = undefined
+goToTheBar = Action "Go to the bar"
 
 hookTheCloak :: Action
-hookTheCloak = undefined
+hookTheCloak = Action "Hook the cloak"

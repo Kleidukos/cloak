@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 011d30a98400314b7cae8a0940e396e6838a21890151a48a221f600ebd764e66
+-- hash: cf6e4dd84d1209738bcda89098da8846f584a8877acd30bfa984b07af4d11026
 
 name:           cloak
 version:        0.0.0
@@ -28,7 +28,15 @@ source-repository head
 library
   exposed-modules:
       Entities
+      Entities.Action
+      Entities.Object
+      Entities.Room
       Prelude
+      Types
+      Types.Action
+      Types.GameState
+      Types.Object
+      Types.Room
   other-modules:
       Paths_cloak
   hs-source-dirs:
@@ -36,6 +44,9 @@ library
   default-extensions: ApplicativeDo BangPatterns ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies DuplicateRecordFields EmptyCase ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PatternSynonyms RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeFamilyDependencies TypeOperators
   build-depends:
       base-noprelude >=4.13.0 && <4.14
+    , hashable >=1.3 && <1.4
+    , optics-core >=0.3 && <0.4
+    , optics-extra >=0.3 && <0.4
     , relude >=0.6.0 && <0.7
     , text >=1.2.4 && <1.3
     , unordered-containers >=0.2.10 && <0.3
