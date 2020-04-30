@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: cf6e4dd84d1209738bcda89098da8846f584a8877acd30bfa984b07af4d11026
+-- hash: 715507580849f4366357e387d33f00ff432328f4b1dacaaa8a4937f5dff30034
 
 name:           cloak
 version:        0.0.0
@@ -31,6 +31,7 @@ library
       Entities.Action
       Entities.Object
       Entities.Room
+      Functions.Room
       Prelude
       Types
       Types.Action

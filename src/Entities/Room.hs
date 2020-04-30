@@ -2,19 +2,13 @@ module Entities.Room
   ( -- * Rooms
     bar
   , foyer
-    -- * Operations on rooms
-  , listActions
-  , changeCurrentRoom
   ) where
 
 import qualified Data.HashMap.Strict as HM
-import           Data.Maybe          (fromJust)
 import qualified Data.Vector         as V
 
 import           Entities.Action
 import           Entities.Object
-import           Types.Action
-import           Types.GameState
 import           Types.Room
 
 foyer :: Room
@@ -26,7 +20,7 @@ foyer = Room { name = "Foyer"
              , east = Nothing
              , west = Nothing
              , objects = V.empty
-             , actions = HM.fromList [(ActionID 2, goToTheBar)]
+             , actions = foyerActionsListing
              , properties = HM.fromList []
              }
 
@@ -39,23 +33,6 @@ bar = Room { name = "Bar"
            , west = Nothing
            , south = Nothing
            , objects = V.singleton brassHook
-           , actions = HM.fromList [(ActionID 1, hookTheCloak)]
+           , actions = HM.empty
            , properties = HM.fromList [(Lit, Off)]
            }
-
--- | List the available actions for the current room
-listActions :: (MonadIO m, MonadState GameState m) => m [Text]
-listActions = do
-  room <- getCurrentRoom
-  let showActions acc actionID action = acc <> [(show actionID :: Text) <> ": " <> (show action :: Text)]
-  pure $ HM.foldlWithKey' showActions [] (actions room)
-
-changeCurrentRoom :: (MonadState GameState m) => RoomID -> m ()
-changeCurrentRoom newCurrentRoom =
-  modify (\GS{rooms} -> GS{currentRoom=newCurrentRoom, rooms})
-
-getCurrentRoom :: (MonadState GameState m) => m Room
-getCurrentRoom = do
-  GS{rooms, currentRoom} <- get
-  pure . fromJust $ HM.lookup currentRoom rooms
-

@@ -14,10 +14,12 @@ newtype RoomID = RoomID Int
   deriving newtype (Show, Eq, Hashable)
 
 data Property = Lit
+              | Cloak
   deriving (Show, Eq, Generic, Hashable)
 
 data Status = On
             | Off
+            | Hooked
   deriving (Show, Eq)
 
 data Room = Room { name        :: Text
@@ -28,6 +30,6 @@ data Room = Room { name        :: Text
                  , west        :: Maybe RoomID
                  , south       :: Maybe RoomID
                  , objects     :: Vector Object
-                 , actions     :: HashMap ActionID Action
+                 , actions     :: HashMap ActionID Text
                  , properties  :: HashMap Property Status
                  } deriving (Show, Eq)
