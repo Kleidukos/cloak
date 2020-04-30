@@ -11,7 +11,7 @@ import           Types.Action
 import           Types.Object
 
 newtype RoomID = RoomID Int
-  deriving newtype (Show, Eq, Hashable)
+  deriving newtype (Show, Eq, Hashable, Read)
 
 data Property = Lit
               | Cloak
@@ -30,6 +30,6 @@ data Room = Room { name        :: Text
                  , west        :: Maybe RoomID
                  , south       :: Maybe RoomID
                  , objects     :: Vector Object
-                 , actions     :: HashMap ActionID Text
+                 , actions     :: HashMap ActionID Action
                  , properties  :: HashMap Property Status
                  } deriving (Show, Eq)

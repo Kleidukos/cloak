@@ -17,10 +17,10 @@ foyerActions :: (MonadState GameState m, MonadIO m)
              => HashMap ActionID (m ())
 foyerActions = HM.fromList [(ActionID 0, describeFoyer), (ActionID 1, goToTheBar)]
 
-foyerActionsListing :: HashMap ActionID Text
+foyerActionsListing :: HashMap ActionID Action
 foyerActionsListing =
-  HM.fromList [ (ActionID 0, "Read the room")
-              , (ActionID 1, "Go to the bar")
+  HM.fromList [ (ActionID 0, Action "Read the room")
+              , (ActionID 1, Action "Go to the bar")
               ]
 
 goToTheBar :: (MonadState GameState m, MonadIO m) => m ()

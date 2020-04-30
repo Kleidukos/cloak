@@ -14,10 +14,10 @@ import           Types.GameState
 import           Types.Room
 
 -- | List the available actions for the current room
-listActions :: (MonadIO m, MonadState GameState m) => m [Text]
+listActions :: (MonadState GameState m) => m [Text]
 listActions = do
   room <- getCurrentRoom
-  let showActions acc actionID action = acc <> [(show actionID :: Text) <> ": " <> action]
+  let showActions acc actionID action = acc <> [(show actionID :: Text) <> ": " <> show action]
   pure $ HM.foldlWithKey' showActions [] (actions room)
 
 changeCurrentRoom :: (MonadState GameState m, MonadIO m) => RoomID -> m ()
