@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e4e312d39b20df78970afd0f3c01ec0ecb6b0d980a030397fcada87a601eb0b3
+-- hash: 01acbb9e6fcec68318153d8582ed18ec40e264c137a42655f28cf02a4ec0fe75
 
 name:           cloak
 version:        0.0.0
@@ -35,6 +35,7 @@ library
       Functions.Action
       Functions.Room
       Prelude
+      StateMachine
       Types
       Types.Action
       Types.GameState
