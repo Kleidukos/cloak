@@ -10,5 +10,8 @@ data ActionError = NoAction
 newtype ActionID = ActionID Int
   deriving newtype (Show, Eq, Hashable, Ord, Num, Read)
 
-newtype Action = Action Text
-  deriving newtype (Show, Eq, IsString)
+data Action a = Go a
+            | Examine a
+            | HookCloak
+            | Inventory
+            deriving (Show, Eq)

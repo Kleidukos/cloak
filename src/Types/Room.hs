@@ -30,6 +30,6 @@ data Room = Room { name        :: Text
                  , west        :: Maybe RoomID
                  , south       :: Maybe RoomID
                  , objects     :: Vector Object
-                 , actions     :: HashMap ActionID Action
+                 , actions     :: HashMap ActionID (Action RoomID)
                  , properties  :: HashMap Property Status
                  } deriving (Show, Eq)

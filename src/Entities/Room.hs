@@ -20,7 +20,7 @@ foyer = Room { name = "Foyer"
              , east = Nothing
              , west = Nothing
              , objects = V.empty
-             , actions = foyerActionsListing
+             , actions = foyerActions
              , properties = HM.fromList []
              }
 
