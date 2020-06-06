@@ -1,15 +1,13 @@
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE NamedFieldPuns   #-}
+{-# LANGUAGE RecordWildCards  #-}
+
 module StateMachine
   ( module StateMachine
   ) where
 
--- > runFSM [Examine, Goto (Cloakroom cloakroomDesc), Examine, HookCloak, Goto (Bar ""), Examine, ReadMessage]
-
-import           Control.Monad (foldM)
-import qualified Data.Text     as T
-import           Prelude       hiding (State, state)
-
-runFSM :: Foldable f => f Event -> IO State
-runFSM events = foldM (\state event -> transition event state) startState events
+import qualified Data.Text as T
+import           Prelude   hiding (State, state)
 
 foyerDesc :: Text
 foyerDesc = T.concat [ "The foyer of the opera house. The southern door leads to the bar"
@@ -57,37 +55,40 @@ data Event = Goto Room
            | HookCloak
            | ReadMessage
 
+transition :: (MonadState State m, MonadIO m) => Event -> m ()
+transition (Goto destRoom) = changeRoom destRoom
+transition Examine         = gets room >>= putTextLn . desc
+transition Inventory       = checkInventory
+transition HookCloak       = hookCloak
+transition ReadMessage     = readMessage
 
-transition :: Event -> State -> IO State
-transition (Goto destRoom) state = changeRoom state destRoom
-transition Examine         state = putTextLn (desc $ room state) >> pure state
-transition Inventory       state = checkInventory state
-transition HookCloak       state = hookCloak state
-transition ReadMessage     state = readMessage state
-
-changeRoom :: State-> Room -> IO State
-changeRoom state@State{bar} destRoom =
+changeRoom :: (MonadState State m) => Room -> m ()
+changeRoom destRoom = do
+  State{..} <- get
   case destRoom of
-    Foyer _ -> pure state{room=Foyer foyerDesc}
+    Foyer _ -> modify $ \s -> s{room=Foyer foyerDesc}
     Bar   _ -> if bar == Unlit
-               then pure $ state{room=Bar unlitBarDesc}
-               else pure $ state{room=Bar barDesc}
-    Cloakroom _ -> pure state{room=Cloakroom cloakroomDesc}
+               then modify $ \s -> s{room=Bar unlitBarDesc}
+               else modify $ \s -> s{room=Bar barDesc}
+    Cloakroom _ -> modify (\s -> s{room=Cloakroom cloakroomDesc})
 
-checkInventory :: State -> IO State
-checkInventory state@State{..} =
+checkInventory :: (MonadState State m, MonadIO m) => m ()
+checkInventory = do
+  inventory <- gets inventory
   case inventory of
-    Cloak -> putTextLn cloakDesc >> pure state
-    Empty -> putTextLn "Nothing" >> pure state
+    Cloak -> putTextLn cloakDesc
+    Empty -> putTextLn "Nothing"
 
-hookCloak :: State -> IO State
-hookCloak state@State{room} =
+hookCloak :: (MonadState State m) => m ()
+hookCloak = do
+  room <- gets room
   case room of
-    Cloakroom _ -> pure state{inventory=Empty, bar=Lit}
-    _           -> pure state
+    Cloakroom _ -> modify' (\s -> s{inventory=Empty, bar=Lit})
+    _           -> pure ()
 
-readMessage :: State -> IO State
-readMessage state@State{room, bar} =
+readMessage :: (MonadState State m, MonadIO m) => m ()
+readMessage = do
+  State{room, bar} <- get
   case (room, bar) of
-    (Bar _, Lit) -> putTextLn "The game is finished!" >> pure state{gameFinished=True}
-    _            -> pure state
+    (Bar _, Lit) -> putTextLn "The game is finished!" >> (modify' (\s -> s{gameFinished=True}))
+    _            -> pure ()

@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "cloak:lib"
+
+    - path: "./app/Main.hs"
+      component: "cloak:exe:cloak"
+
+    - path: "./app/Paths_cloak.hs"
+      component: "cloak:exe:cloak"

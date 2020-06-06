@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 01acbb9e6fcec68318153d8582ed18ec40e264c137a42655f28cf02a4ec0fe75
+-- hash: fc3205d9603f176ae5e6ee7fffaf4c2bfb69572bb19a4a90af3aa6482e8de487
 
 name:           cloak
 version:        0.0.0
@@ -27,20 +27,8 @@ source-repository head
 
 library
   exposed-modules:
-      Entities
-      Entities.Action
-      Entities.Object
-      Entities.Room
-      Functions
-      Functions.Action
-      Functions.Room
       Prelude
       StateMachine
-      Types
-      Types.Action
-      Types.GameState
-      Types.Object
-      Types.Room
   other-modules:
       Paths_cloak
   hs-source-dirs:
@@ -49,8 +37,6 @@ library
   build-depends:
       base-noprelude >=4.13.0 && <4.14
     , hashable >=1.3 && <1.4
-    , optics-core >=0.3 && <0.4
-    , optics-extra >=0.3 && <0.4
     , relude >=0.6.0 && <0.7
     , text >=1.2.4 && <1.3
     , unordered-containers >=0.2.10 && <0.3
@@ -73,44 +59,6 @@ executable cloak
       base-noprelude
     , cloak
     , relude
-  if impl(ghc >= 8.4.4)
-    ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wpartial-fields -Wredundant-constraints -fhide-source-paths -Wno-unused-do-bind
-  else
-    ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -fhide-source-paths -Wno-unused-do-bind
-  default-language: Haskell2010
-
-test-suite cloak-test
-  type: exitcode-stdio-1.0
-  main-is: Main.hs
-  other-modules:
-      Paths_cloak
-  hs-source-dirs:
-      test
-  default-extensions: ApplicativeDo BangPatterns ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies DuplicateRecordFields EmptyCase ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PatternSynonyms RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeFamilyDependencies TypeOperators
-  build-depends:
-      base-noprelude
-    , cloak
-    , relude
-    , tasty
-    , tasty-hspec
-  if impl(ghc >= 8.4.4)
-    ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wpartial-fields -Wredundant-constraints -fhide-source-paths -Wno-unused-do-bind
-  else
-    ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -fhide-source-paths -Wno-unused-do-bind
-  default-language: Haskell2010
-
-benchmark cloak-benchmarks
-  type: exitcode-stdio-1.0
-  main-is: Main.hs
-  other-modules:
-      Paths_cloak
-  hs-source-dirs:
-      benchmark
-  default-extensions: ApplicativeDo BangPatterns ConstraintKinds DataKinds DefaultSignatures DeriveAnyClass DeriveFoldable DeriveFunctor DeriveGeneric DeriveLift DeriveTraversable DerivingStrategies DuplicateRecordFields EmptyCase ExistentialQuantification FlexibleContexts FlexibleInstances FunctionalDependencies GADTs GeneralizedNewtypeDeriving InstanceSigs KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PatternSynonyms RankNTypes RecordWildCards ScopedTypeVariables StandaloneDeriving TupleSections TypeApplications TypeFamilies TypeFamilyDependencies TypeOperators
-  build-depends:
-      base-noprelude
-    , cloak
-    , criterion
   if impl(ghc >= 8.4.4)
     ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wpartial-fields -Wredundant-constraints -fhide-source-paths -Wno-unused-do-bind
   else

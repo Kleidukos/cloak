@@ -1,11 +1,10 @@
-resolver: lts-15.8
+resolver: lts-15.15
+
+packages:
+  - '.'
 
 extra-deps:
 - base-noprelude-4.13.0.0
-- optics-core-0.3@sha256:0464583aaef715f8e48b8c9ce3fab9866345de93e740dae32d5c5e9a57097bf7,4532
-- optics-extra-0.3@sha256:b1b9917596a4305069aa95eaf3083afe88c6db3c84ed6f52e926c82d0c56eea9,3382
 
-
-nix:
-  enable: true
-  packages: [glpk, pcre, zlib]
+ghc-options:
+  "$locals": -fwrite-ide-info
